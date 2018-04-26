@@ -32,7 +32,7 @@ In my database, there are 25 classes, each class has its own directory,
 
 and the images belong to this class should put into this directory.
 
-### Part2: run the code
+### Part2: run each feature extractor
 I implement several algorithm, you can run it with python3.
 
 #### For RGB histogram
@@ -72,11 +72,36 @@ You need to install pytorch0.2 to run the code
 python3 src/resnet.py
 ```
 
+### Part3: evalutation
+Evaluation is an important part, since it tell you how good your feature extraction methods are.
+
+In each feature extractor, you need to implement a method called *histogram*.
+
+Function *histogram* need a image input, and return a vector that represents image's feature.
+
+As soon as you finish Function *histogram*, you can use **evaluate_class** that implemented in [evaluate.py](https://github.com/brianhuang1019/CBIR/blob/master/src/evaluate.py) to evaluate your method.
+
+For example, see [color.py line191](https://github.com/brianhuang1019/CBIR/blob/master/src/color.py#L191)
+```python
+APs = evaluate_class(Database(), f_class=Color, d_type=d_type, depth=depth)
+```
+- First parameter is your database
+- Parameter *f_class* is your feature extractor Class (need to implement Function *histogram*)
+- Parameter *d_type* is the distance metric you want to use
+- Parameter *depth* means how many return images for a query image. (depth=5 means to return top-5 images and evaluate on these 5 images)
+
+Then you can print the performance with these codes:
+```python
+for cls, cls_APs in APs.items():
+    MAP = np.mean(cls_APs)
+    print("Class {}, MAP {}".format(cls, MAP))
+    cls_MAPs.append(MAP)
+print("MMAP", np.mean(cls_MAPs))
+```
+
 Above are basic usage of my codes.
 
-There are some advanced issue such as features fusion and dimension reduction,
-
-the intro of these parts will be written further in the future :D
+There are some advanced issue such as features fusion and dimension reduction, see the appendix part below
 
 ### Appendix 1: feature fusion
 I implement the basic feature fusion method -- concatenation.
