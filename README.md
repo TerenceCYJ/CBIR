@@ -57,6 +57,7 @@ Method | color | daisy | edge | gabor | HOG | vgg19 | resnet152
 --- | --- | --- | --- |--- |--- |--- |---
 Mean MAP (depth=10) | 0.614 | 0.468 | 0.301 | 0.346 | 0.450 | 0.914 | 0.944
 
+*depth=10 means to return top-10 images for a given query, and the evaluation will take place on top-10 images*
 
 
 ## Part3: image retrieval (return top 5 of each method)
